@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>For Nushrat Jahan</title>
+
+    <style>
+        :root {
+            --rose: #ff4d88;
+            --rose2: #ff7aa8;
+            --blush: #fff0f7;
+            --white: #ffffff;
+            --ink: #3a0b22;
+            --card: rgba(255, 255, 255, .80);
+            --stroke: rgba(122, 33, 70, .14);
+            --shadow: 0 18px 55px rgba(122, 33, 70, .18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            color: var(--ink);
+            overflow-x: hidden;
+            overflow-y: auto;
+            background:
+                radial-gradient(850px 520px at 20% 15%, rgba(255, 255, 255, .9), transparent 60%),
+                radial-gradient(900px 550px at 80% 20%, rgba(255, 255, 255, .85), transparent 58%),
+                linear-gradient(135deg, #ffd1e3, var(--blush) 55%, var(--white));
+        }
+
+        /* Background layer fixed */
+        .bgLayer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blob {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 999px;
+            filter: blur(36px);
+            opacity: .22;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(255, 122, 168, .9), transparent 55%),
+                radial-gradient(circle at 70% 70%, rgba(255, 240, 247, 1), transparent 60%);
+            animation: floaty 12s ease-in-out infinite;
+        }
+
+        .blob.b1 {
+            top: -160px;
+            left: -160px;
+        }
+
+        .blob.b2 {
+            bottom: -180px;
+            right: -180px;
+            animation-duration: 14s;
+            opacity: .18;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(16px, -12px) scale(1.03);
+            }
+        }
+
+        .hearts,
+        .sparkles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            transform: rotate(45deg);
+            background: rgba(255, 77, 136, .28);
+            animation: rise linear infinite;
+            border-radius: 3px;
+            opacity: 0;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            left: -7px;
+            top: 0;
+        }
+
+        .heart::after {
+            left: 0;
+            top: -7px;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(35vh) rotate(45deg) scale(.95);
+                opacity: 0;
+            }
+
+            12% {
+                opacity: .9;
+            }
+
+            100% {
+                transform: translateY(-120vh) rotate(45deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .70);
+            box-shadow: 0 0 14px rgba(255, 77, 136, .35);
+            animation: sparkleUp linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkleUp {
+            0% {
+                transform: translateY(35vh) scale(.8);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: .95;
+            }
+
+            100% {
+                transform: translateY(-120vh) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .loveFlame {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -20px;
+            height: 140px;
+            opacity: .33;
+            filter: blur(10px);
+            background:
+                radial-gradient(60px 90px at 8% 80%, rgba(255, 77, 136, .45), transparent 60%),
+                radial-gradient(80px 120px at 22% 90%, rgba(255, 122, 168, .40), transparent 65%),
+                radial-gradient(70px 110px at 40% 85%, rgba(255, 77, 136, .38), transparent 62%),
+                radial-gradient(90px 140px at 60% 92%, rgba(255, 160, 200, .35), transparent 70%),
+                radial-gradient(70px 120px at 78% 88%, rgba(255, 77, 136, .34), transparent 62%),
+                radial-gradient(60px 90px at 92% 86%, rgba(255, 122, 168, .36), transparent 60%);
+            animation: flameMove 3.2s ease-in-out infinite;
+        }
+
+        @keyframes flameMove {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+        /* Foreground */
+        .wrap {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        @media (max-height:760px) {
+            .wrap {
+                align-items: flex-start;
+                padding-top: 16px;
+            }
+        }
+
+        .card {
+            width: min(760px, 94vw);
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+        }
+
+        .title {
+            margin: 0 0 8px 0;
+            font-size: clamp(24px, 4vw, 36px);
+            font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+        }
+
+        .subtitle {
+            margin: 0 0 18px 0;
+            color: rgba(122, 33, 70, .92);
+            line-height: 1.45;
+            font-size: 15px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, .62);
+            border: 1px solid rgba(122, 33, 70, .10);
+            border-radius: 18px;
+            padding: 18px;
+            margin-top: 14px;
+            text-align: center;
+        }
+
+
+        .question {
+            margin: 0 0 12px 0;
+            font-weight: 800;
+            font-size: 16px;
+            text-align: center;
+        }
+
+
+        .btn {
+            border: 0;
+            padding: 12px 16px;
+            border-radius: 999px;
+            font-weight: 800;
+            cursor: pointer;
+            user-select: none;
+            transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: scale(.98);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--rose), var(--rose2));
+            color: #fff;
+            box-shadow: 0 14px 34px rgba(255, 77, 136, .32);
+            animation: yesPulse 1.9s ease-in-out infinite;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .btn-yes::after {
+            content: "✨";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes yesPulse {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-1px) scale(1.02);
+            }
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, .92);
+            color: var(--ink);
+            border: 1px solid rgba(122, 33, 70, .24);
+            box-shadow: 0 12px 30px rgba(122, 33, 70, .08);
+            white-space: nowrap;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid rgba(122, 33, 70, .14);
+            color: var(--ink);
+            box-shadow: 0 12px 28px rgba(122, 33, 70, .06);
+        }
+
+        /* Arena centered */
+        .arena {
+            position: relative;
+            width: 100%;
+            height: 110px;
+            border-radius: 16px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width:420px) {
+            .arena {
+                height: 140px;
+            }
+        }
+
+        /* Buttons are positioned by JS inside arena */
+        #yesBtn,
+        #noBtn {
+            position: absolute;
+            top: 12px;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn .22s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Image */
+        .photoFrame {
+            margin-top: 14px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(122, 33, 70, .14);
+            box-shadow: 0 18px 55px rgba(122, 33, 70, .12);
+            background: rgba(255, 255, 255, .75);
+        }
+
+        .photoFrame img {
+            width: 100%;
+            height: auto;
+            max-height: 58vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        /* IMPORTANT: only make buttons full width inside .row, not everywhere */
+        @media (max-width:420px) {
+            .row .btn {
+                width: 100%;
+            }
+        }
+
+        /* Glow burst */
+        .burst {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(160px 160px at var(--bx) var(--by), rgba(255, 77, 136, .35), transparent 60%),
+                radial-gradient(260px 260px at var(--bx) var(--by), rgba(255, 255, 255, .35), transparent 70%);
+            transition: opacity .25s ease;
+            z-index: 2;
+        }
+
+        .burst.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bgLayer">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="hearts" id="hearts"></div>
+        <div class="sparkles" id="sparkles"></div>
+        <div class="loveFlame"></div>
+    </div>
+
+    <div class="burst" id="burst"></div>
+
+    <div class="wrap">
+        <div class="card">
+
+            <!-- PAGE 1 -->
+            <section class="page active" id="page1">
+                <h1 class="title">Bonjour, My Love Nushrat 💖</h1>
+                <p class="subtitle">
+                    I want to remind you of one truth: I still choose you. Always, In every mood and every season.
+                    You are my love, my peace, and the best part of my life. I want to ask you something from my heart.
+                </p>
+
+                <div class="section">
+                    <p class="question">Will you stay with me for your whole life?</p>
+
+                    <div class="arena" id="arena">
+                        <button class="btn btn-yes" id="yesBtn">Yes, forever 💍</button>
+                        <button class="btn btn-no" id="noBtn">No 😢</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE 2 -->
+            <section class="page" id="page2">
+                <h1 class="title">You are my forever 💗</h1>
+                <p class="subtitle">
+                    Thank you, my love. I will spend my whole life proving that your “yes” was worth it.
+                </p>
+
+                <div class="section">
+                    <p class="question">A message for you:</p>
+                    <p style="margin:0; line-height:1.6; color: rgba(58,11,34,.88);">
+                        My Love, you are my peace, my laughter, and my strength. Being your husband is the greatest
+                        honor of my life.
+                        I don’t just love you, I admire you. I want to hold your hand through every season, every
+                        change, every dream,
+                        and every quiet moment. I love you more deeply than words can say. You are my forever, and I am
+                        endlessly grateful for you.
+                    </p>
+
+                    <div class="photoFrame">
+                        <img src="assets/us.jpeg" alt="Us together" />
+                    </div>
+
+                    <div class="row">
+                        <button class="btn btn-secondary" id="backBtn">Back</button>
+                    </div>
+
+                    <audio id="song" src="assets/crimson-haze.mp3" preload="auto" playsinline></audio>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        function rand(min, max) { return Math.random() * (max - min) + min; }
+
+        // Hearts
+        const hearts = document.getElementById('hearts');
+        function spawnHeart(extra = false) {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            const size = extra ? rand(12, 22) : rand(10, 18);
+            h.style.width = size + 'px';
+            h.style.height = size + 'px';
+            h.style.left = rand(0, 100) + 'vw';
+            h.style.animationDuration = rand(6.5, 11.5) + 's';
+            h.style.animationDelay = rand(0, 2.5) + 's';
+            hearts.appendChild(h);
+            setTimeout(() => h.remove(), 16000);
+        }
+        for (let i = 0; i < 24; i++) spawnHeart();
+        setInterval(() => spawnHeart(false), 650);
+
+        // Sparkles
+        const sparkles = document.getElementById('sparkles');
+        function spawnSpark() {
+            const s = document.createElement('div');
+            s.className = 'spark';
+            const size = rand(4, 8);
+            s.style.width = size + 'px';
+            s.style.height = size + 'px';
+            s.style.left = rand(0, 100) + 'vw';
+            s.style.animationDuration = rand(5.5, 10) + 's';
+            s.style.animationDelay = rand(0, 3) + 's';
+            sparkles.appendChild(s);
+            setTimeout(() => s.remove(), 16000);
+        }
+        for (let i = 0; i < 16; i++) spawnSpark();
+        setInterval(spawnSpark, 900);
+
+        // Pages
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const backBtn = document.getElementById('backBtn');
+        const arena = document.getElementById('arena');
+
+        function showPage(page) {
+            page1.classList.remove('active');
+            page2.classList.remove('active');
+            page.classList.add('active');
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Music autoplay after clicking Yes
+        const song = document.getElementById('song');
+        async function startSong() {
+            try {
+                song.volume = 0.9;
+                song.currentTime = 0;
+                await song.play();
+            } catch (e) { }
+        }
+
+        // Burst
+        const burst = document.getElementById('burst');
+        function glowBurstAt(x, y) {
+            const bx = (x / window.innerWidth) * 100;
+            const by = (y / window.innerHeight) * 100;
+            burst.style.setProperty('--bx', bx + '%');
+            burst.style.setProperty('--by', by + '%');
+            burst.classList.add('show');
+            setTimeout(() => burst.classList.remove('show'), 260);
+        }
+
+        // Overlap helper
+        function rectsOverlap(r1, r2, margin = 8) {
+            return !(
+                r1.right + margin < r2.left ||
+                r1.left - margin > r2.right ||
+                r1.bottom + margin < r2.top ||
+                r1.top - margin > r2.bottom
+            );
+        }
+
+        // Center initial positions (desktop + mobile)
+        function placeButtonsCentered() {
+            const pad = 10;
+            const gap = 12;
+
+            const aW = arena.clientWidth;
+            const yesW = yesBtn.offsetWidth;
+            const noW = noBtn.offsetWidth;
+
+            const sideBySide = (yesW + gap + noW + pad * 2) <= aW;
+
+            if (sideBySide) {
+                const total = yesW + gap + noW;
+                let startX = Math.floor((aW - total) / 2);
+                if (startX < pad) startX = pad;
+
+                yesBtn.style.left = startX + "px";
+                yesBtn.style.top = "12px";
+
+                noBtn.style.left = (startX + yesW + gap) + "px";
+                noBtn.style.top = "12px";
+            } else {
+                // Stack on small screens, centered
+                let xYes = Math.floor((aW - yesW) / 2);
+                let xNo = Math.floor((aW - noW) / 2);
+                if (xYes < pad) xYes = pad;
+                if (xNo < pad) xNo = pad;
+
+                yesBtn.style.left = xYes + "px";
+                yesBtn.style.top = "12px";
+
+                noBtn.style.left = xNo + "px";
+                noBtn.style.top = (12 + yesBtn.offsetHeight + 14) + "px";
+            }
+        }
+
+        // Move NO inside arena and avoid YES
+        function moveNoInsideArena() {
+            const pad = 10;
+            const aRect = arena.getBoundingClientRect();
+            const yRect = yesBtn.getBoundingClientRect();
+            const nRect = noBtn.getBoundingClientRect();
+
+            const maxLeft = aRect.width - nRect.width - pad;
+            const maxTop = aRect.height - nRect.height - pad;
+            if (maxLeft <= pad || maxTop <= pad) return;
+
+            for (let i = 0; i < 50; i++) {
+                const left = Math.floor(rand(pad, maxLeft));
+                const top = Math.floor(rand(pad, maxTop));
+
+                const candidate = {
+                    left: aRect.left + left,
+                    top: aRect.top + top,
+                    right: aRect.left + left + nRect.width,
+                    bottom: aRect.top + top + nRect.height
+                };
+
+                if (!rectsOverlap(candidate, yRect, 12)) {
+                    noBtn.style.left = left + "px";
+                    noBtn.style.top = top + "px";
+                    return;
+                }
+            }
+        }
+
+        // YES click
+        yesBtn.addEventListener('click', async (e) => {
+            glowBurstAt(e.clientX, e.clientY);
+
+            // extra hearts burst
+            for (let i = 0; i < 16; i++) {
+                setTimeout(() => spawnHeart(true), i * 40);
+            }
+
+            showPage(page2);
+            await startSong();
+        });
+
+        backBtn.addEventListener('click', () => {
+            song.pause();
+            song.currentTime = 0;
+            showPage(page1);
+            placeButtonsCentered();
+        });
+
+        // NO must NEVER be clickable: always escape on any attempt
+        function escapeNo(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveNoInsideArena();
+            noBtn.animate(
+                [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }],
+                { duration: 180 }
+            );
+        }
+
+        // Desktop: run away when cursor approaches
+        noBtn.addEventListener('mouseenter', escapeNo);
+
+        // Mobile + all: run away when user tries to press
+        noBtn.addEventListener('pointerdown', escapeNo, { passive: false });
+        noBtn.addEventListener('click', escapeNo);
+
+        // Initial placement
+        window.addEventListener('load', () => setTimeout(placeButtonsCentered, 0));
+        window.addEventListener('resize', () => placeButtonsCentered());
+    </script>
+</body>
+
+</html>
